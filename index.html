@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Présentation Matrix - Innovation technologique et design d'excellence" />
     <meta name="keywords" content="matrix, technologie, innovation, futuriste, CAC40" />
+    <!-- Optimisations pour l'autoplay avec son -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Matrix - Innovation Technologique</title>
     <style>
       /* Preloader optimisé pour présentation professionnelle */
@@ -14,16 +18,53 @@
         margin: 0;
         padding: 0;
         font-display: swap;
+        /* Optimisations pour l'audio */
+        -webkit-user-select: none;
+        user-select: none;
       }
       /* Préchargement des polices critiques */
       @font-face {
         font-family: 'Orbitron';
         font-display: swap;
       }
+      /* Optimisations pour l'autoplay vidéo */
+      video {
+        -webkit-playsinline: true;
+        -moz-playsinline: true;
+        -ms-playsinline: true;
+        -o-playsinline: true;
+        playsinline: true;
+      }
     </style>
   </head>
-  <body>
+  <body onclick="void(0)">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Script d'activation audio immédiat
+      (function() {
+        const enableAudio = () => {
+          try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) {
+              const audioContext = new AudioContext();
+              if (audioContext.state === 'suspended') {
+                audioContext.resume();
+              }
+            }
+          } catch (e) {
+            console.log('Audio context activation failed:', e);
+          }
+        };
+        
+        // Tentative immédiate
+        enableAudio();
+        
+        // Sur première interaction
+        document.addEventListener('click', enableAudio, { once: true });
+        document.addEventListener('touchstart', enableAudio, { once: true });
+        document.addEventListener('keydown', enableAudio, { once: true });
+      })();
+    </script>
   </body>
 </html>
