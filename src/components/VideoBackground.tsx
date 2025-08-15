@@ -16,35 +16,31 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({ videoUrl }) =>
     const video = videoRef.current;
     if (!video) return;
 
-    // Configuration optimale pour PC/navigateur
+    // Configuration pour lecture automatique forcée
     video.preload = 'auto';
     video.playsInline = true;
-    video.muted = false; // Son activé par défaut
+    video.muted = true; // Démarrage en muet pour éviter les blocages navigateur
+    video.autoplay = true;
     
     const handleCanPlay = () => {
       setIsLoaded(true);
-      // Tentative de lecture automatique avec son
+      // Lecture automatique immédiate
       video.play()
         .then(() => {
           setIsPlaying(true);
-          setIsMuted(false);
+          setIsMuted(true);
+          // Réactiver le son après interaction utilisateur
+          const enableSound = () => {
+            video.muted = false;
+            setIsMuted(false);
+            document.removeEventListener('click', enableSound);
+            document.removeEventListener('keydown', enableSound);
+          };
+          document.addEventListener('click', enableSound);
+          document.addEventListener('keydown', enableSound);
         })
         .catch(() => {
-          // Si échec avec son, essayer en muet puis réactiver
-          video.muted = true;
-          video.play()
-            .then(() => {
-              setIsPlaying(true);
-              setIsMuted(true);
-              // Réactiver le son après 1 seconde
-              setTimeout(() => {
-                video.muted = false;
-                setIsMuted(false);
-              }, 1000);
-            })
-            .catch(() => {
-              setHasError(true);
-            });
+          setHasError(true);
         });
     };
 
