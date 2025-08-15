@@ -57,26 +57,64 @@ export const MatrixText: React.FC = () => {
       
       {/* Particules flottantes optimisées */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isComplete && [...Array(8)].map((_, i) => (
+        {isComplete && [...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1.5 h-1.5 bg-green-400 rounded-full opacity-80
-                       animate-float shadow-[0_0_12px_rgba(0,255,65,0.9)]
+            className="absolute w-2 h-2 bg-green-400 rounded-full opacity-90
+                       animate-float shadow-[0_0_20px_rgba(0,255,65,1)]
                        will-change-transform"
             style={{
-              left: `${10 + i * 10}%`,
-              top: `${25 + (i % 3) * 20}%`,
+              left: `${5 + i * 8}%`,
+              top: `${20 + (i % 4) * 15}%`,
               animationDelay: `${i * 0.3}s`,
-              animationDuration: `${3 + i * 0.2}s`
+              animationDuration: `${4 + i * 0.3}s`
             }}
           />
         ))}
       </div>
       
-      {/* Lignes de scan effet CRT subtiles */}
-      <div className="absolute inset-0 pointer-events-none opacity-20
-                      bg-gradient-to-b from-transparent via-green-400/10 to-transparent
-                      animate-scan-lines will-change-transform" />
+      {/* Effets de lumière radiale premium */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {isComplete && (
+          <>
+            {/* Cercles de lumière pulsants */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                           w-96 h-96 rounded-full border border-green-400/20
+                           animate-pulse-ring shadow-[0_0_100px_rgba(0,255,65,0.3)]" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                           w-[32rem] h-[32rem] rounded-full border border-green-400/10
+                           animate-pulse-ring-delayed shadow-[0_0_150px_rgba(0,255,65,0.2)]" />
+            
+            {/* Rayons de lumière rotatifs */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                           w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/30 to-transparent
+                           animate-rotate-slow origin-center" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                           w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/20 to-transparent
+                           animate-rotate-reverse origin-center" />
+            
+            {/* Particules d'énergie orbitales */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={`orbital-${i}`}
+                className="absolute top-1/2 left-1/2 w-1 h-1 bg-green-400 rounded-full
+                           shadow-[0_0_15px_rgba(0,255,65,1)] animate-orbital"
+                style={{
+                  transformOrigin: `${120 + i * 20}px 0`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${8 + i}s`
+                }}
+              />
+            ))}
+          </>
+        )}
+      </div>
+      
+      {/* Effet de distorsion holographique */}
+      <div className="absolute inset-0 pointer-events-none opacity-30">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/5 to-transparent
+                        animate-hologram-wave transform skew-y-1" />
+      </div>
     </div>
   );
 };
